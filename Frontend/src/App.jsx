@@ -14,6 +14,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import OrderDet from "./Admin/OrderDet";
 import AdminProductdet from "./Admin/AdminProductdet";
 import PlaceOrderStatus from "./pages/PlaceOrderStatus";
+import Sales from "./Admin/Sales";
 
 function App() {
   const router = createBrowserRouter([
@@ -111,6 +112,15 @@ function App() {
         </ProtectedRoute>
       ),
     },
+    {
+      path:"/admin/sales",
+      element:(
+        <ProtectedRoute role="admin">
+<Sales/>
+        </ProtectedRoute>
+      )
+
+    }
   ]);
 
   return (

@@ -9,6 +9,7 @@ import { authrouter } from "./router/Auth.Router.js";
 import {cartrouter} from "./router/Cart.Router.js";
 import { orderrouter } from "./router/Order.Router.js";
 import { userRouter } from "./router/User.Router.js";
+import { salesRouter } from "./router/Sales.Route.js";
 
 const app=express();
 app.use(express.json());
@@ -27,6 +28,7 @@ app.use('/api',catroute)
 app.use('/api/auth',authrouter)
 app.use('/api/cart',cartrouter)
 app.use('/api/order',orderrouter)
+app.use('/api/admin/sales',salesRouter)
 
 
 

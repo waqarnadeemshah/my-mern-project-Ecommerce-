@@ -10,6 +10,7 @@ export const verifyuser=async (req,res,next)=>{
 
         const decode=jwt.verify(token,process.env.ACCESSTOKEN)
         req.usertoken=decode;
+        
         next()
     } catch (err) {
          res.status(500).json({ sucess: false, error: err.message    });

@@ -78,7 +78,7 @@ export const login = async (req, res) => {
     res.cookie("refreshtoken", refreshtoken, {
       httpOnly: true,
 
-      secure: false,  // because you're on localhost
+      secure: false,  
   sameSite: "lax"
     });
     res.status(200).json({
@@ -102,7 +102,7 @@ export const regeneratetoken = async (req, res) => {
         .json({ sucess: false, msg: "not match refreshtoken" });
     }
     const decode = jwt.verify(refreshtoken, process.env.REFRESHTOKEN);
-    
+    // userdata = findOne({ _id: id });
     const regenerateacesstoken = generateaccesstoken(userdata);
     const reregenreatefreshtoken = generateresfresstoken(userdata);
     userdata.refreshtoken = reregenreatefreshtoken;

@@ -162,7 +162,7 @@ export const updateproduct = async (req, res) => {
       finalImages = uploadedImages;
     }
 
-    // 🔹 Product update karo
+
     const updateitem = await Product.findOneAndUpdate(
       { _id: paramsid },
       {

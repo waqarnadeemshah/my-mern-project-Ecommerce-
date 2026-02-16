@@ -7,9 +7,9 @@ function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
-  const [handleerror, sethandleerror] = useState([]);
+  const [handleerror ,sethandleerror]=useState([]);
 
-  
+  // Refs
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -22,12 +22,13 @@ function Signup() {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     };
-    try {
+try {
       await dispatch(signup(formData)).unwrap();
-      navigate("/login", { replace: true });
-    } catch (error) {
-      sethandleerror(error.errors || []);
-    }
+    navigate("/login", { replace: true });
+} catch (error) {
+  sethandleerror(error.errors||[])
+}
+
   };
 
   return (
@@ -81,7 +82,7 @@ function Signup() {
                   ref={emailRef}
                   required
                   autoComplete="email"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black outline-1 -outline-offset-1 outline-black/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-black sm:text-sm/6"
+                  className="ock w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black outline-1 -outline-offset-1 outline-black/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-black sm:text-sm/6"
                 />
               </div>
             </div>
@@ -103,7 +104,7 @@ function Signup() {
                   ref={passwordRef}
                   required
                   autoComplete="current-password"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black outline-1 -outline-offset-1 outline-black/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-black sm:text-sm/6"
+                  className="ock w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black outline-1 -outline-offset-1 outline-black/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-black sm:text-sm/6"
                 />
               </div>
             </div>
@@ -119,15 +120,18 @@ function Signup() {
             </div>
           </form>
 
-          {handleerror.length > 0 &&
-            handleerror.map((errObj, index) => (
-              <p key={index} className="mt-4 text-center text-sm text-red-500">
-                {errObj.msg}
-              </p>
-            ))}
-          {error && error.msg && (
-            <p className="mt-4 text-center text-sm text-red-500">{error.msg}</p>
-          )}
+ {handleerror.length > 0 &&
+  handleerror.map((errObj, index) => (
+    <p key={index} className="mt-4 text-center text-sm text-red-500">
+      {errObj.msg}
+    </p>
+  ))
+}
+{error && error.msg && (
+  <p className="mt-4 text-center text-sm text-red-500">{error.msg}</p>
+)}
+
+
 
           <p className="mt-10 text-center text-sm/6 text-gray-400">
             <Link

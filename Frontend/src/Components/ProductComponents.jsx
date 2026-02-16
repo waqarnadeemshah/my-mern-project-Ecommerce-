@@ -7,7 +7,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addtocart } from "../features/cartslice";
 
-function ProductComponents({ products }) {
+function ProductComponents({ products,search }) {
   const dispatch = useDispatch();
   const { productbyCategory } = useSelector((s) => s.category);
 

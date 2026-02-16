@@ -10,7 +10,7 @@ export const fetchallcat = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 export const fetchallproduct = createAsyncThunk(
   "api/getallproduct",
@@ -21,21 +21,21 @@ export const fetchallproduct = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 export const fetchproductbycat = createAsyncThunk(
   "api/productbycat",
   async ({ maincatid, subCategory }, { rejectWithValue }) => {
     try {
       const res = await API.get(
-        `/api/user/getproductbycat/${maincatid}/${subCategory}`
+        `/api/user/getproductbycat/${maincatid}/${subCategory}`,
       );
 
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 export const detailproduct = createAsyncThunk(
   "api/detailproduct",
@@ -46,18 +46,32 @@ export const detailproduct = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 export const sortingproducts = createAsyncThunk(
   "/api/sortproduct",
-  async ({mainCategory,subCategory,sorttype}, { rejectWithValue }) => {
+  async ({ mainCategory, subCategory, sorttype }, { rejectWithValue }) => {
     try {
-      const res = await API.get(`/api/user/sortproduct/${mainCategory}/${subCategory}?sort=${sorttype}`);
+      const res = await API.get(
+        `/api/user/sortproduct/${mainCategory}/${subCategory}?sort=${sorttype}`,
+      );
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
-  }
+  },
+);
+
+export const searchProducts = createAsyncThunk(
+  "api/searchProducts",
+  async (search, { rejectWithValue }) => {
+    try {
+      const res = await API.get(`/api/user/search?search=${search}`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  },
 );
 
 const categoryslice = createSlice({
@@ -75,49 +89,49 @@ const categoryslice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchallproduct.pending, (state) => {
-        (state.loading = true), (state.error = null);
+        ((state.loading = true), (state.error = null));
       })
       .addCase(fetchallproduct.fulfilled, (state, action) => {
-        (state.product = action.payload.product),
+        ((state.product = action.payload.product),
           (state.loading = false),
-          (state.error = null);
+          (state.error = null));
       })
       .addCase(fetchallproduct.rejected, (state, action) => {
-        (state.loading = false), (state.error = action.payload);
+        ((state.loading = false), (state.error = action.payload));
       })
       .addCase(fetchallcat.pending, (state) => {
-        (state.loading = true), (state.error = null);
+        ((state.loading = true), (state.error = null));
       })
       .addCase(fetchallcat.fulfilled, (state, action) => {
-        (state.Categories = action.payload.cat),
+        ((state.Categories = action.payload.cat),
           (state.loading = false),
-          (state.error = null);
+          (state.error = null));
       })
       .addCase(fetchallcat.rejected, (state, action) => {
-        (state.loading = false), (state.error = action.payload);
+        ((state.loading = false), (state.error = action.payload));
       })
       .addCase(fetchproductbycat.pending, (state) => {
-        (state.loading = true), (state.error = null);
+        ((state.loading = true), (state.error = null));
       })
       .addCase(fetchproductbycat.fulfilled, (state, action) => {
-        (state.productbyCategory = action.payload.product),
+        ((state.productbyCategory = action.payload.product),
           (state.productlength = action.payload.count),
           (state.loading = false),
-          (state.error = null);
+          (state.error = null));
       })
       .addCase(detailproduct.pending, (state) => {
-        (state.loading = true), (state.error = null);
+        ((state.loading = true), (state.error = null));
       })
       .addCase(detailproduct.fulfilled, (state, action) => {
-        (state.loading = false),
+        ((state.loading = false),
           (state.error = null),
-          (state.productdetarray = action.payload.productdet);
+          (state.productdetarray = action.payload.productdet));
       })
       .addCase(detailproduct.rejected, (state, action) => {
-        (state.loading = false), (state.error = action.payload);
+        ((state.loading = false), (state.error = action.payload));
       })
       .addCase(sortingproducts.pending, (state) => {
-        (state.loading = true), (state.error = null);
+        ((state.loading = true), (state.error = null));
       })
       .addCase(sortingproducts.fulfilled, (state, action) => {
         state.loading = false;
@@ -125,7 +139,19 @@ const categoryslice = createSlice({
         state.productbyCategory = action.payload.products;
       })
       .addCase(sortingproducts.rejected, (state, action) => {
-        (state.loading = false), (state.error = action.payload);
+        ((state.loading = false), (state.error = action.payload));
+      })
+
+      .addCase(searchProducts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(searchProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productbyCategory = action.payload.products;
+      })
+      .addCase(searchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

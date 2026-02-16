@@ -66,4 +66,31 @@ export const sortingproducts = async (req, res) => {
     res.status(500).json({ sucess: false, error: err.message });
   }
 };
+export const searchProducts = async (req, res) => {
+  try {
+    const { search } = req.query;
+
+    if (!search || search.trim() === "") {
+      return res.status(200).json({
+        success: true,
+        products: [],
+      });
+    }
+
+    const products = await Product.find({
+      name: { $regex: search, $options: "i" },
+    });
+
+    res.status(200).json({
+      success: true,
+      products,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
 

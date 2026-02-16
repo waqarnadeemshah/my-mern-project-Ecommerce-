@@ -142,3 +142,27 @@ export const cartview=async(req,res)=>{
        res.status(500).json({ sucess: false, error: err.message })
   }
 }
+export const decresequalityy=async(req,res)=>{
+  try {
+    const {productid,selectedsize,guestid}=req.body;
+    const usedid=req.usertoken.id;
+    let cart
+    if(usedid){
+cart=await cart.findOne({usedid});
+    }
+    else{
+      cart=await cart.findOne({guestid})
+    }
+const itemcheck=cart.items.find((p)=>p.productid===productid&&p.selectedsize===selectedsize);
+if(!cart){
+  res.status(404).json({msg:"not found"});
+}
+if(cart.quantity>1){
+  cart.quantity--
+}
+   await cartdata.save();
+    res.status(200).json({sucess:true,cart:cartdata})
+  } catch (error) {
+     res.status(500).json({ sucess: false, error: err.message })
+  }
+}
